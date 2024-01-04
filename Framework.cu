@@ -356,6 +356,21 @@ void example_opti_shear_isotropy(cfg::HomoConfig config) {
 
 void example_yours(cfg::HomoConfig config) {
 	// add your routines here ...
+	// set output prefix
+	//setPathPrefix(config.outprefix);
+	//// create homogenization domain
+	//Homogenization hom(config);
+	//// update config resolution
+	//for (int i = 0; i < 3; i++) config.reso[i] = hom.getGrid()->cellReso[i];
+	//// define density expression
+	//TensorVar<float> rho(config.reso[0], config.reso[1], config.reso[2]);
+	//rho.value().fromHost(config.clipboard);
+	//// define material interpolation term
+	//auto rhop = rho.pow(3);
+	//// create elastic tensor expression
+	//auto Ch = genCH(hom, rhop);
+	//AbortErr();
+	//Ch.writeToTxt("C.txt");
 }
 
 void runCustom(cfg::HomoConfig config) {

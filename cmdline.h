@@ -57,6 +57,7 @@ namespace cfg {
 		int max_iter = 200;
 		int initperiod;
 		void parse(int argc, char** argv);
+		std::vector<float> clipboard;
 	};
 }
 

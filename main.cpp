@@ -3,6 +3,9 @@
 
 #include <iostream>
 #include "cmdline.h"
+#include <fstream>
+#include <sstream>
+#include <string>
 
 extern void cuda_test(void);
 extern void testAutoDiff(void);
@@ -35,6 +38,22 @@ int main(int argc, char** argv)
 	//test_NegativePoisson();
 	homo::setPathPrefix(config.outprefix);
 	try {
+		if (config.obj == cfg::Objective::custom)
+		{
+			std::ifstream inFile("C:\\Users\\lzx\\Desktop\\tpo\\ai\\code\\spinodal\\test.csv", std::ios::in);
+			std::string lineStr;
+			while (getline(inFile, lineStr))
+			{
+				std::stringstream ss(lineStr);
+				std::string str;
+				//std::cout << lineStr<<std::endl;
+				while (getline(ss, str, ','))
+				{
+					config.clipboard.push_back(stoi(str));
+				}
+			}
+		}
+		//system("pause");
 		testHomogenization(config);
 		runInstance(config);
 	}
