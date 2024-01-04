@@ -1,6 +1,7 @@
 #pragma once
 #include "gflags/gflags.h"
 #include "stdint.h"
+#include <vector>
 
 
 DECLARE_int32(reso);
