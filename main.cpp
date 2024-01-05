@@ -53,6 +53,7 @@ int main(int argc, char** argv)
 				}
 			}
 		}
+		std::cout << config.clipboard.size();
 		//system("pause");
 		testHomogenization(config);
 		runInstance(config);
