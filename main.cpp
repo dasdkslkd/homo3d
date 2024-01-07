@@ -40,6 +40,7 @@ int main(int argc, char** argv)
 	try {
 		if (config.obj == cfg::Objective::custom)
 		{
+#if 0
 			std::ifstream inFile("C:\\Users\\lzx\\Desktop\\tpo\\ai\\code\\spinodal\\test.csv", std::ios::in);
 			std::string lineStr;
 			while (getline(inFile, lineStr))
@@ -52,8 +53,26 @@ int main(int argc, char** argv)
 					config.clipboard.push_back(stoi(str));
 				}
 			}
+#endif
+			std::ifstream file(config.infile, std::ios::binary);
+			if (!file) {
+				std::cerr << "can't open file" << std::endl;
+				return 1;
+			}
+			unsigned char byte;
+			while (file.read(reinterpret_cast<char*>(&byte), sizeof(byte))) {
+				config.clipboard.emplace_back((byte) & 1);
+				config.clipboard.emplace_back((byte >> 1) & 1);
+				config.clipboard.emplace_back((byte >> 2) & 1);
+				config.clipboard.emplace_back((byte >> 3) & 1);
+				config.clipboard.emplace_back((byte >> 4) & 1);
+				config.clipboard.emplace_back((byte >> 5) & 1);
+				config.clipboard.emplace_back((byte >> 6) & 1);
+				config.clipboard.emplace_back((byte >> 7) & 1);
+			}
+			file.close();
 		}
-		std::cout << config.clipboard.size();
+		//std::cout << config.clipboard.size();
 		//system("pause");
 		testHomogenization(config);
 		runInstance(config);
