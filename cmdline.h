@@ -53,7 +53,6 @@ namespace cfg {
 		std::string outprefix;
 		std::string testname;
 		std::string inputrho;
-		std::string infile = "data.bin";
 		bool useManagedMemory = true;
 		int logrho, logc, logsens, logobj;
 		int max_iter = 200;

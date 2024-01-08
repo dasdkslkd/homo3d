@@ -5,7 +5,7 @@
 #include "cmdline.h"
 #include <fstream>
 #include <sstream>
-#include <string>
+#include <cstring>
 
 extern void cuda_test(void);
 extern void testAutoDiff(void);
@@ -24,8 +24,34 @@ namespace homo {
 
 int main(int argc, char** argv)
 {
+	std::string infile = "data.bin";
+	bool flag = false;
+	std::vector<char*> argv_m;
+	for (int i = 0; i < argc; ++i)
+	{
+		if (std::string(argv[i]) == "--infile")
+		{
+			infile = argv[i + 1];
+			argc -= 2;
+			for (int j = i + 2; j < argc; ++j)
+			{
+				argv_m.emplace_back(argv[j]);
+			}
+			flag = true;
+			break;
+		}
+		argv_m.emplace_back(argv[i]);
+	}
+
 	cfg::HomoConfig config;
-	config.parse(argc, argv);
+	if (flag)
+	{
+		config.parse(argc, &argv_m[0]);
+	}
+	else {
+		config.parse(argc, argv);
+	}
+	
 
     std::cout << "Hello World!\n";
 	cuda_test();
@@ -54,7 +80,8 @@ int main(int argc, char** argv)
 				}
 			}
 #endif
-			std::ifstream file(config.infile, std::ios::binary);
+			
+			std::ifstream file(infile, std::ios::binary);
 			if (!file) {
 				std::cerr << "can't open file" << std::endl;
 				return 1;
